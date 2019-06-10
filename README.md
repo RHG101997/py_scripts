@@ -12,3 +12,4 @@ define.py -> Easy way to get definition through CLI using Dictionary.com definit
 
 sync.py -> Smart way to copy files. Will copy the files and folders missing, ignore all the files that are currently in the folder. there is 2 modes "-s" and "-d"(explanation inside the script file)
 
+

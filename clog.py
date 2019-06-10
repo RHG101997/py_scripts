@@ -7,14 +7,18 @@ import os
 
 '''
 
-def log(c,t):
-    os.system("")
-    print("["+ str(c)+ "m" + t +"[0m")
+class Clog:
+    def log(self,c,t):
+        os.system("")
+        print("["+ str(c)+ "m" + t +"[0m")
 
-def warning(t):
-    os.system("")
-    print("[93"+ "m" + t +"[0m")
+    def warning(self,t):
+        os.system("")
+        print("[93"+ "m" + t +"[0m")
 
-def error(t):
-    os.system("")
-    print("[91"+ "m" + t +"[0m")
+    def error(self,t):
+        os.system("")
+        print("[91"+ "m" + t +"[0m")
+
+q = Clog()
+q.log(96,"william put")
