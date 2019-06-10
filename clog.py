@@ -19,6 +19,3 @@ class Clog:
     def error(self,t):
         os.system("")
         print("[91"+ "m" + t +"[0m")
-
-q = Clog()
-q.log(96,"william put")
