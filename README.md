@@ -13,5 +13,5 @@ define.py -> Easy way to get definition through CLI using Dictionary.com definit
 sync.py -> Smart way to copy files. Will copy the files and folders missing, ignore all the files that are currently in the folder. there is 2 modes "-s" and "-d"(explanation inside the script file)
 
 clog.py -> this small class will make it easier to add color to projects. when imported look at the function clog.test() for examples on how to use it. This project is not completed and has room for improvement
-<img src="./imgs/clog.png"  height="400" width="400">
+<img src="./imgs/clog .png"  height="300" width="600">
 
