@@ -33,9 +33,18 @@ class BeginClog:
     }
     def __init__(self):
         # required for color to be correctly displayed
-        os.system("")  
+        os.system("")
+          
 
 
+    '''
+        ***************************************************************
+        ***************    Title(Log) coloring  ***********************
+        ***************************************************************
+        Log function are like a print, but they have the option to chnage the bg, and also
+        they reset the color when they end.
+
+    '''
 
     def genColorCode(self, text_accent, txt_color, bg_color = "none",bg_accent = "normal"): 
         '''This function is used by c_log class to get the code for the colors [Ex:[91m] '''
@@ -77,9 +86,29 @@ class BeginClog:
         os.system("")
         print("[91"+ "m" + t +"[0m")
 
+    '''
+        ***************************************************************
+        *******************    Block coloring  ***********************
+        ***************************************************************
+        When function begin is called all text printed after that point
+        will be colored base on the color selected
+    
+    '''
+    def beginBlock(self, txt_color):
+        color_code = self.color_text["strong"] + self.color[txt_color]
+        print("["+ str(color_code) +"m",end="")
+    
+    def reset(self):
+        print("[0m",end="")
 
 
-def test():
+
+
+
+
+
+
+def testLogs():
     '''clog.test() To see some results this is Example Code'''
     q = BeginClog()
     # This is using log function
@@ -96,3 +125,13 @@ def test():
 
     q.bgLog("cyan","red", "I am red with cyan bg[Accent is normal]")
     q.bgLog("cyan","red", "I am red with cyan bg[Accent is strong]", "strong")
+
+def testBlock():
+    q = BeginClog()
+    # this functions will begin a block of colored text
+    q.beginBlock("cyan")
+    print("This text is colored cyan")
+    print("this will be colored cyan")
+    # this function will return text to normal
+    q.reset()
+    print("Now this is not colored")
