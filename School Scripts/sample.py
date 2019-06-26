@@ -13,7 +13,6 @@ class Sample:
         •Standard Diviation
     '''
 
-
     def __init__(self,sample):
         self.sample = sample
         self.sampleSize = len(sample)
@@ -109,6 +108,7 @@ class Sample:
         '''
         return self.mean() / math.sqrt(self.sampleSize)
 
+    
 
 
     def printInfo(self):
