@@ -11,6 +11,8 @@ class Sample:
         •Variance
         •percentile
         •Standard Diviation
+        •IQR
+        •BoxPlot (Min, Max, Outliers)
     '''
 
     def __init__(self,sample):
@@ -83,6 +85,16 @@ class Sample:
         for n in num:
             sum +=n
         return sum/len(num)
+    
+    def standardErrorMean(self):
+        '''
+        The standard error of the mean (SEM) is equal to the
+        standard sample deviation s divided by the square root of
+        the sample size (n)
+        SEM = s/sqrt(n)
+        '''
+        return self.mean() / math.sqrt(self.sampleSize)
+
 
 
     def percentile(self, p):
@@ -95,38 +107,61 @@ class Sample:
         '''
         percentile = (p/100)*(self.sampleSize+1)
         if isinstance(percentile, int):
-            return percentile
+            return self.sampleSorted[percentile]
         return self.getAverage([self.sampleSorted[math.floor(percentile-1)],self.sampleSorted[math.floor(percentile+1)-1]])
 
-     
-    def standardErrorMean(self):
+    def iqr(self):
         '''
-        The standard error of the mean (SEM) is equal to the
-        standard sample deviation s divided by the square root of
-        the sample size (n)
-        SEM = s/sqrt(n)
+        InterQuartileRange(IQR)
         '''
-        return self.mean() / math.sqrt(self.sampleSize)
-
+        return self.percentile(75) - self.percentile(25)
     
+    '''
+    If plotting a BoxPlot All required info:
+    ->Q1,Median ,Q3 
+    ->minBoxPlot
+    ->maxBoxPlot
+    ->outliers
+    '''
+    def minBoxPlot(self):
+        return self.percentile(25)-(self.iqr() * 1.5)
+    
+    def maxBoxPlot(self):
+        return self.percentile(75)+(self.iqr() * 1.5)
+
+    def outliers(self):
+        outliers = [x for x in self.sampleSorted if x < self.minBoxPlot() or x > self.maxBoxPlot() ]
+        return outliers
 
 
     def printInfo(self):
-        print("--------------------------------------------------")
+        print("-" * 92)
         print("Sample: " + str(self.sample))
+        print("-" * 92)
         print("Sample Sorted: " + str(self.sampleSorted))
-        print("--------------------------------------------------")
+        print("-" * 92)
         print("Size(n): " + str(self.sampleSize))
         print("Mean: " +  str(round(self.mean(), 2)))
         print("Variance: " + str(round(self.variance(),2)))
         print("Standard Deviation: " + str(round(self.standardDeviation(self.variance()),2)))
         print("SEM(Standard Error Mean): " + str(round(self.standardErrorMean(),2)))
-        print("--------------------------------------------------")
-        print("1rs Quartile: " + str(self.percentile(25)))
+        print("-" * 92)
+        print("1rs Quartile(Q1): " + str(self.percentile(25)))
         print("Median(2nd Quartile): " + str(self.median()))
-        print("3rd Quartile: " + str(self.percentile(75)))
-        print("--------------------------------------------------")
+        print("3rd Quartile(Q3): " + str(self.percentile(75)))
+        print("-" * 92)
+        print("InterQuartileRange(IQR): " + str(self.iqr()))
+        print("(BoxPlot)Min:" + str(self.minBoxPlot()) )
+        print("(BoxPlot)Max: "+ str(self.maxBoxPlot()))
+        print("-" * 92)
+        print("Outliers: ")
+        print(str(self.outliers()))
+        print("-" * 92)
         
+        
+
+
+
 
 def test():
     # a = [ 72.30, 68.31, 67.05, 70.68]
@@ -134,13 +169,10 @@ def test():
     # a =[1,2,3,4,20]
     # a = [30, 75, 79, 80, 80, 105, 126, 138, 149, 179, 179, 191, 223, 232, 232,
     # 236, 240, 242, 245, 247, 254, 274, 384, 470]
-    a = [2, 3, 5, 6, 7, 9, 9, 11, 12, 15]
+    a = [300,500,3,4, 42, 45, 49, 50, 51, 51, 51, 51, 53, 53, 55, 55, 56, 56, 57,58, 60, 66, 67, 67, 68, 69, 70, 71, 72, 73, 73, 74, 75, 75, 75, 75,76, 76, 76, 76, 76, 79,79, 80, 80, 80, 80, 81, 82, 82, 82, 83, 83,84, 84, 84, 85, 86, 86, 86, 88, 90, 91, 93]
 
     sample = Sample(a)
     sample.printInfo()
 
 
-c = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,5,5,5]
-sample = Sample(c)
-sample.printInfo()
-
+test()
