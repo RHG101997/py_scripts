@@ -5,7 +5,7 @@ from pynput.keyboard import Listener, KeyCode, Key
 
 
 delay = 0.10
-button = Button.right
+button = Button.left
 start_stop_key = Key.f9
 exit_key = Key.f10
 
@@ -33,7 +33,7 @@ class ClickMouse(threading.Thread):
         while self.program_running:
             while self.running:
                 mouse.position = self.original_pos
-                mouse.click(self.button)
+                mouse.press(self.button)
                 time.sleep(self.delay)
             time.sleep(0.1)
 
