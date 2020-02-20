@@ -4,11 +4,15 @@ import os
 
 
 def Main():
-    host = "10.0.0.46"
+    
+
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    hostname = socket.gethostname()
+    host = socket.gethostbyname(hostname)
     port  = 1235
     bytes_per_package = 1024
 
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind((host,port))
     print("Waiting for connection")
     s.listen(3)
@@ -16,13 +20,13 @@ def Main():
         conn, addr = s.accept()
         print("Conection Established with : " + str(addr))
         filesize = int(conn.recv(bytes_per_package))
-        confirm = raw_input("File size: " + str(filesize) + "Bytes, donwload (Y/N)?")
+        confirm = input("File size: " + str(filesize) + "Bytes, donwload (Y/N)?")
         
         if confirm == 'Y':
-            conn.send("FN")
+            conn.send(b"FN")
             filename = conn.recv(bytes_per_package)
-            conn.send("DL")
-            f = open("new_" + filename,'wb')
+            conn.send(b"DL")
+            f = open("new_" + filename.decode("utf-8"),'wb')
             data = conn.recv(bytes_per_package)
             totalRecv = len(data)
             f.write(data)
@@ -30,9 +34,10 @@ def Main():
                 data = conn.recv(bytes_per_package)
                 totalRecv += len(data)
                 f.write(data)
-                print "{0:.2f}".format((totalRecv/float(filesize))*100)+ "%"
+                print(str(totalRecv/float(filesize))*100 + "%")
             print("Download completed...")
             f.close()
+            break
 
     conn.close()
     s.close()

@@ -2,14 +2,14 @@ import socket
 import os
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-host = "10.0.0.46"
+host = "10.108.41.38"
 port = 1235
 bytes_per_package = 1024
 
-filename = raw_input("Filename: ->")
+filename = input("Filename: ->")
 if os.path.isfile(filename):
     s.connect((host,port))
-    s.send(str(os.path.getsize(filename)))
+    s.send(bytes(str(os.path.getsize(filename)),"utf-8"))
     print("Requesting Permission")
     response = s.recv(bytes_per_package)
     if response[:2] == 'FN':
