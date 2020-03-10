@@ -7,7 +7,7 @@ def Main():
     
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
+    
     hostname = socket.gethostname()
     host = socket.gethostbyname(hostname)
     port  = 1235
@@ -21,7 +21,6 @@ def Main():
         print("Conection Established with : " + str(addr))
         filesize = int(conn.recv(bytes_per_package))
         confirm = input("File size: " + str(filesize) + "Bytes, donwload (Y/N)?")
-        
         if confirm == 'Y':
             conn.send(b"FN")
             filename = conn.recv(bytes_per_package)
@@ -34,13 +33,15 @@ def Main():
                 data = conn.recv(bytes_per_package)
                 totalRecv += len(data)
                 f.write(data)
-                print(str(totalRecv/float(filesize))*100 + "%")
+                print(str(totalRecv/float(filesize))*100 + "%\n")
+
             print("Download completed...")
             f.close()
             break
 
     conn.close()
     s.close()
+
 
 
 if __name__ == '__main__':
